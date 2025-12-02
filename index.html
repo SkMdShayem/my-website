@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!--
+Beginner Friendly: Single-file working website (index.html)
+This file contains: HTML structure, simple CSS, and interactive JavaScript.
+Follow the step-by-step checklist below to run and customize it.
+
+How to use:
+1. Create a folder on your computer, e.g. "my-website".
+2. Save this file as index.html inside that folder.
+3. Open index.html in a web browser (double-click). To run a simple local server (optional):
+   - If you have Python 3: run `python -m http.server 8000` inside the folder, then visit http://localhost:8000
+
+What's included in the document below:
+- A step-by-step checklist (Beginner-friendly)
+- Full single-file website code (index.html)
+- Explanation of each part (HTML / CSS / JS)
+- Next steps: separate files, add images, deploy to GitHub Pages, learn resources, mini-challenges
+-->
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My First Website — Starter</title>
+  <style>
+    /* Basic reset and layout */
+    :root{
+      --accent: #2563eb; /* blue */
+      --muted: #6b7280;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:#111;line-height:1.5}
+    header{background:linear-gradient(90deg,var(--accent),#7c3aed);color:white;padding:28px 20px}
+    .container{max-width:960px;margin:20px auto;padding:0 16px}
+    h1{margin:0 0 8px;font-size:28px}
+    p.lead{color:var(--muted);margin:0}
+
+    /* Card */
+    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06);margin-top:20px}
+
+    /* Grid for features */
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+    .feature{padding:12px;border-radius:10px;border:1px solid #eef2ff}
+    .btn{display:inline-block;padding:8px 14px;border-radius:8px;background:var(--accent);color:white;text-decoration:none;font-weight:600}
+
+    /* Simple form styling */
+    form{display:flex;gap:8px;flex-wrap:wrap}
+    input[type="text"]{flex:1;padding:10px;border-radius:8px;border:1px solid #d1d5db}
+
+    footer{color:var(--muted);text-align:center;padding:28px 20px;margin-top:24px}
+
+    /* small responsive tweaks */
+    @media (max-width:480px){h1{font-size:22px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>My First Website</h1>
+      <p class="lead">A tiny, working website you can edit right now. Built for beginners.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Try it now</h2>
+      <p>Type your name below and press "Greet me" — JavaScript will show a greeting.</p>
+      <form id="greetForm">
+        <input id="nameInput" type="text" placeholder="Enter your name" aria-label="name" />
+        <button id="greetBtn" class="btn" type="submit">Greet me</button>
+      </form>
+      <div id="greeting" style="margin-top:12px;font-weight:600"></div>
+    </section>
+
+    <section class="card">
+      <h2>Site features</h2>
+      <div class="grid">
+        <div class="feature">
+          <strong>HTML</strong>
+          <p class="lead">Structure of the page — headings, paragraphs, forms.</p>
+        </div>
+        <div class="feature">
+          <strong>CSS</strong>
+          <p class="lead">Controls how things look: colors, layout, spacing.</p>
+        </div>
+        <div class="feature">
+          <strong>JavaScript</strong>
+          <p class="lead">Adds interactivity — this page greets you using JS.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Quick code demo (open the browser console)</h2>
+      <p class="lead">This small script runs when you submit the form. It also stores your name in localStorage so the page remembers you.</p>
+      <pre style="background:#f3f4f6;padding:12px;border-radius:8px;overflow:auto">// JavaScript is included at the bottom of this page</pre>
+    </section>
+
+    <section class="card">
+      <h2>Next steps (what you can do now)</h2>
+      <ol>
+        <li>Open index.html in your browser and try the greeting form.</li>
+        <li>Edit the placeholder text and the header — save & refresh to see changes.</li>
+        <li>Replace colors in <code>:root</code> to change theme.</li>
+        <li>Try adding another button that changes the page background color using JS.</li>
+      </ol>
+      <p>When you're ready, ask me to split this into separate files (index.html, styles.css, script.js) or convert it into a React app or deploy it to GitHub Pages — I can do each step with exact commands.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">Built for learning • Edit freely • Ask me for help</div>
+  </footer>
+
+  <!-- JavaScript placed just before closing body for faster page load -->
+  <script>
+    // Get elements
+    const form = document.getElementById('greetForm');
+    const nameInput = document.getElementById('nameInput');
+    const greeting = document.getElementById('greeting');
+
+    // Load saved name if available
+    const savedName = localStorage.getItem('myWebsiteName');
+    if (savedName) {
+      nameInput.value = savedName;
+      greeting.textContent = `Welcome back, ${savedName}!`;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // stop page reload
+      const name = nameInput.value.trim();
+      if (!name) {
+        greeting.textContent = 'Please enter your name.';
+        return;
+      }
+
+      // show greeting
+      greeting.textContent = `Hello, ${name}! Nice to meet you 👋`;
+
+      // save name so page remembers you
+      localStorage.setItem('myWebsiteName', name);
+
+      // tiny animation: flash background of greeting
+      greeting.animate([
+        { background: 'rgba(37,99,235,0.12)' },
+        { background: 'transparent' }
+      ], { duration: 800 });
+    });
+
+    // Optional: simple keyboard shortcut (press / to focus input)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/') {
+        e.preventDefault();
+        nameInput.focus();
+      }
+    });
+  </script>
+
+  <!--
+  ---------- Helpful guide (not code) ----------
+  Below are explanations and actions. If you open this file in a code editor
+  (VS Code recommended), you can follow these numbered steps:
+
+  1) Separate files:
+     - Create styles.css and script.js and move the <style> and <script> content there.
+     - Link them: <link rel="stylesheet" href="styles.css"> and <script src="script.js"></script>
+
+  2) Run a local server (recommended when using fetch or modern frameworks):
+     - Python 3: `python -m http.server 8000` then visit http://localhost:8000
+     - Node: `npx http-server` (if you have node/npm installed)
+
+  3) Deploy (free) to GitHub Pages:
+     - Create a GitHub repo, add these files, push the main branch.
+     - Enable GitHub Pages in repo settings and choose the main branch -> / (root).
+     - Your site will be live at https://<your-username>.github.io/<repo-name>/ (may take a minute)
+
+  4) Learn more (short roadmap):
+     - HTML basics: elements, attributes, forms, semantic tags (<header>, <main>, etc.)
+     - CSS basics: selectors, box model, flexbox, grid, responsive designs
+     - JavaScript basics: variables, functions, DOM, events, fetch (APIs)
+     - Next: version control (git), Node.js, a framework (React or Vue)
+
+  5) Mini challenges (practice):
+     - Add an About section and an image.
+     - Add a "Clear name" button that removes saved name from localStorage.
+     - Create a theme toggle (light/dark mode).
+
+  -----------------------------------------------
+  -->
+</body>
+</html>
